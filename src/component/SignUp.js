@@ -8,7 +8,6 @@ const SignUp = () => {
   <input className='inputBox' type="email" placeholder='Enter Email' />
   <input className='inputBox' type="password" placeholder='Enter Password' />
   <button className='buttonReg' type="button"> Ragister</button>
-  <button className='buttonReg' type="button"> Ragister</button>
     </div>
   )
 }
