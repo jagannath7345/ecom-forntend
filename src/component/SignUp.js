@@ -1,44 +1,39 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-  const submitData = () => {
-    console.log(name,email,password)
-  }
-
-  return (
-    <div className="ragister">
-      <h1>Ragister</h1>
-      <input
-        className="inputBox"
-        type="text"
-        placeholder="Enter Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        className="inputBox"
-        type="email"
-        placeholder="Enter Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        className="inputBox"
-        type="password"
-        placeholder="Enter Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button className="buttonReg" type="button"onClick={submitData}>
-        {" "}
-        Ragister
-      </button>
-    </div>
-  );
-};
-
-export default SignUp;
+    const submitData = async () => {
+        console.warn(name, email, password);
+        let result = await fetch("http://localhost:5000/register", {
+            method: 'post',
+            body: JSON.stringify({ name, email, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        result = await result.json();
+        console.warn(result);
+        navigate('/')
+    }
+    return (
+        <div className="register">
+            <h1>Register</h1>
+            <input className="inputBox" type="text" placeholder="Enter Name"
+                value={name} onChange={(e) => setName(e.target.value)}
+            />
+            <input className="inputBox" type="text" placeholder="Enter Email"
+                value={email} onChange={(e) => setEmail(e.target.value)}
+            />
+            <input className="inputBox" type="password" placeholder="Enter password"
+                value={password} onChange={(e) => setPassword(e.target.value)}
+            />
+            <button onClick={submitData} className="appButton" type="button">Sign Up</button>
+        </div>
+    )
+}
+export default SignUp
